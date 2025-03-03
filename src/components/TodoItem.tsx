@@ -30,7 +30,9 @@ export const TodoItem: React.FC<Props> = ({
           checked={todo.completed}
           onChange={() => onToggle(todo.id)}
         />
-        <span className="visually-hidden">Toggle Todo</span>
+        <span className="hidden" style={{ display: 'none' }}>
+          *
+        </span>
       </label>
 
       <span data-cy="TodoTitle" className="todo__title">

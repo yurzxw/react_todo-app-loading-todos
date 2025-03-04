@@ -33,47 +33,52 @@ export const Footer: React.FC<Props> = ({
     Active = 'active',
     Completed = 'completed',
   }
-  if (todos.length !== 0) {
-    return (
-      <footer
-        className={classNames('todoapp__footer', {
-          hidden: todos.length === 0,
-        })}
-        data-cy="Footer"
-      >
-        <span className="todo-count" data-cy="TodosCounter">
-          {todos.filter(todo => !todo.completed).length} items left
-        </span>
 
-        {/* Active link should have the 'selected' class */}
-        <nav className="filter" data-cy="Filter">
-          {Object.values(Status).map((status, index) => (
+  return (
+    <footer
+      className={classNames('todoapp__footer', {
+        hidden: todos.length === 0,
+      })}
+      data-cy="Footer"
+    >
+      <span className="todo-count" data-cy="TodosCounter">
+        {todos.filter(todo => !todo.completed).length} items left
+      </span>
+
+      {/* Active link should have the 'selected' class */}
+      <nav className="filter" data-cy="Filter">
+        {Object.values(Status).map((status, index) => {
+          const isActive = filter === status;
+
+          return (
             <a
-            key={index}
+              key={index}
               href="#/"
               className={classNames('filter__link', {
                 selected: filter === status,
               })}
-              data-cy="FilterLinkAll"
-              onClick={() => onFilter(status)}
+              data-cy={isActive ? 'FilterLinkActive' : 'FilterLinkAll'}
+              onClick={() => {
+                onFilter(status);
+              }}
             >
               {Object.keys(Status).find(k => Status[k] === status)}
             </a>
-          ))}
-        </nav>
+          );
+        })}
+      </nav>
 
-        {/* this button should be disabled if there are no completed todos */}
-        <button
-          type="button"
-          className="todoapp__clear-completed"
-          data-cy="ClearCompletedButton"
-          onClick={() => {
-            clearCompleted();
-          }}
-        >
-          Clear completed
-        </button>
-      </footer>
-    );
-  }
+      {/* this button should be disabled if there are no completed todos */}
+      <button
+        type="button"
+        className="todoapp__clear-completed"
+        data-cy="ClearCompletedButton"
+        onClick={() => {
+          clearCompleted();
+        }}
+      >
+        Clear completed
+      </button>
+    </footer>
+  );
 };

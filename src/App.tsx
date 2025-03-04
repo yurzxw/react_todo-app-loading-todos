@@ -113,13 +113,15 @@ export const App: React.FC = () => {
           id={id}
         />
 
-        <Footer
-          onFilter={setFilter}
-          onError={setError}
-          onTodos={setTodos}
-          todos={todos}
-          filter={filter}
-        />
+        {!!todos.length && (
+          <Footer
+            onFilter={setFilter}
+            onError={setError}
+            onTodos={setTodos}
+            todos={todos}
+            filter={filter}
+          />
+        )}
       </div>
 
       <div

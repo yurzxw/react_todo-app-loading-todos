@@ -47,22 +47,22 @@ export const Footer: React.FC<Props> = ({
 
       {/* Active link should have the 'selected' class */}
       <nav className="filter" data-cy="Filter">
-        {Object.values(Status).map((status, index) => {
+      {Object.values(Status).map((status, index) => {
           const isActive = filter === status;
-
+          const filteLabel = Object.keys(Status).find(k => Status[k] === status)
           return (
             <a
               key={index}
               href="#/"
               className={classNames('filter__link', {
-                selected: filter === status,
+                selected: isActive,
               })}
-              data-cy={isActive ? 'FilterLinkActive' : 'FilterLinkAll'}
+              data-cy={`FilterLink${filteLabel}`}
               onClick={() => {
                 onFilter(status);
               }}
             >
-              {Object.keys(Status).find(k => Status[k] === status)}
+              {filteLabel}
             </a>
           );
         })}

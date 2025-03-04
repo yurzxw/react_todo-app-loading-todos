@@ -14,6 +14,28 @@ export const Header: React.FC<Props> = ({
   onQuery,
   query,
 }) => {
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (query === '') {
+      onError('Title should not be empty');
+
+      return;
+    }
+
+    todosService
+      .postTodo({
+        userId: USER_ID,
+        title: query,
+        completed: false,
+      })
+      .then(newTodo => {
+        onTodos(currentTodos => [...currentTodos, newTodo]);
+      })
+      .catch(() => onError('Unable to add a todo'));
+
+    onQuery('');
+  }
+
   return (
     <header className="todoapp__header">
       {/* this button should have `active` class only if all todos are completed */}
@@ -26,25 +48,7 @@ export const Header: React.FC<Props> = ({
       {/* Add a todo on form submit */}
       <form
         onSubmit={event => {
-          event.preventDefault();
-          if (query === '') {
-            onError('Title should not be empty');
-
-            return;
-          }
-
-          todosService
-            .postTodo({
-              userId: USER_ID,
-              title: query,
-              completed: false,
-            })
-            .then(newTodo => {
-              onTodos(currentTodos => [...currentTodos, newTodo]);
-            })
-            .catch(() => onError('Unable to add a todo'));
-
-          onQuery('');
+          handleSubmit(event);
         }}
       >
         <input

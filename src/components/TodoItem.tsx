@@ -7,7 +7,6 @@ type Props = {
   loading: boolean;
   id: number;
 };
-
 export const TodoItem: React.FC<Props> = ({
   todo,
   onToggle,
@@ -15,6 +14,8 @@ export const TodoItem: React.FC<Props> = ({
   loading,
   id,
 }) => {
+  const { title } = todo;
+
   return (
     <div
       data-cy="Todo"
@@ -36,7 +37,7 @@ export const TodoItem: React.FC<Props> = ({
       </label>
 
       <span data-cy="TodoTitle" className="todo__title">
-        {todo.title}
+        {title}
       </span>
 
       {/* Remove button appears only on hover */}

@@ -15,6 +15,11 @@ export const App: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const [id, setId] = useState(0);
 
+  enum Status {
+    Active = 'active',
+    Completed = 'completed',
+    All = 'all',
+  }
   if (error !== '') {
     setTimeout(() => {
       setError('');
@@ -78,11 +83,11 @@ export const App: React.FC = () => {
   }, []);
 
   const filteredTodos = todos.filter(todo => {
-    if (filter === 'active') {
+    if (filter === Status.Active) {
       return !todo.completed;
     }
 
-    if (filter === 'completed') {
+    if (filter === Status.Completed) {
       return todo.completed;
     }
 
